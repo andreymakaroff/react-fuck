@@ -1,0 +1,146 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+html, body, h1, h2, h3, h4, h5, small {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+a {
+  color: teal;
+}
+
+h1 {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 40px;
+  color: white;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.top-bar, .top-bar ul {
+  background: none;
+  color: #999;
+}
+
+.top-bar {
+  position: fixed;
+  width: 100%;
+  z-index: 5000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.5s ease;
+}
+
+.top-bar.scrollNav {
+  background: #ffffff;
+  opacity: 0.92;
+  transition: all 0.5s ease;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.8);
+.menu li, .menu li a {
+  color: #555;
+}
+}
+
+.big-banner {
+  background: url(https://upload.wikimedia.org/wikipedia/commons/1/14/Panorama_puy_de_dome_sud.jpg) center 80%;
+  background-size: cover;
+  margin-bottom: 50px;
+  transition: 0.5s ease all;
+&.blurred {
+   filter: blur(2px);
+ }
+}
+
+.highlight {
+  opacity: 0.7;
+  color: teal;
+}
+
+.menu li, .menu li a {
+  color: white;
+}
+
+.callout.primary {
+  background: none;
+}
+
+.callout.large {
+  padding: 9em 3em 7em;
+}
+
+
+.callout {
+  background-color: #333;
+}
+
+.callout.callout-post {
+  border-top: 3px solid #333;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid #aaa;
+  background: #f9f9f9;
+.menu a {
+  color: #aaa;
+}
+}
+
+.blog-post {
+  margin-bottom: 70px;
+h3 {
+  text-transform: uppercase;
+  color: #666;
+  letter-spacing: 0.05em;
+  font-size: 25px;
+}
+small {
+  float: right;
+  margin-top: 20px;
+  font-size: 18px;
+}
+}
+
+.form-area {
+  margin-bottom: 60px;
+button {
+  background: teal;
+  text-align: center;
+  color: white;
+  padding: 0.7em;
+  border-radius: 4px;
+  width: 100%;
+  margin: 10px auto;
+  transition: 0.3s all ease;
+&:hover {
+   background: #1A9696;
+ }
+}
+}
+
+h5 {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: teal;
+}
+
+.callout.secondary {
+  background-color: #f9f9f9;
+  border-color: #ddd;
+  border-radius: 4px;
+input {
+  border-color: #ddd;
+  border-radius: 4px;
+}
+}
+
+@media screen and (max-width: 900px) {
+  .blog-post small {
+    font-size: 12px !important;
+  }
+
+  h1 {
+    letter-spacing: 0.15em;
+    font-size: 30px;
+  }
+}
