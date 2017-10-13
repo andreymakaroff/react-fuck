@@ -18,10 +18,9 @@ class AddPostForm extends React.Component{
       // desc : this.refs.desc.value,
       // image : this.refs.image.value
     }
-    console.log(post)
     // add the post to the App State
     this.props.addPost(post);
-    // this.refs.postForm.reset();
+    this.refs.postForm.reset();
   }
   render() {
     return (

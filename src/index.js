@@ -40,25 +40,18 @@ class App extends React.Component{
      posts: {},
    }
   }
-  //
-  // getInitialState() {
-  //   return {
-  //     posts :
-  //       {id: 1507818931271, title: "sdc"}
-  //   }
-  // }
   addPost(post) {
-    var timestamp = (new Date()).getTime();
-    console.log(this);
-    // update the state object
-    this.state.posts['post-' + timestamp] = post;
-    //console.log(this.state.posts);
-    // set the state
+    var postId = post.id;
+    this.state.posts['post-' + postId] = post;
+    this.setState({ posts : this.state.posts });
+  }
+  deletePost(id) {
+    delete this.state.posts['post-' + id];
     this.setState({ posts : this.state.posts });
   }
 
   renderPost(key){
-    return <NewPost key={key} index={key} details={this.state.posts[key]} />
+    return <NewPost key={key} index={key} details={this.state.posts[key]}  deletePost={this.deletePost.bind(this)} />
   }
   render() {
     var imgOne = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Balaton_Hungary_Landscape.jpg/1024px-Balaton_Hungary_Landscape.jpg";
@@ -86,14 +79,9 @@ class App extends React.Component{
   <NewPost />
 */
 class NewPost extends React.Component{
-  deleteClickPost(event) {
-    console.log('1212'+this.props);
-    // var post = {
-    //   id : timestamp,
-    // }
-    // // add the post to the App State
-    // this.props.addPost(post);
-    // this.refs.postForm.reset();
+  deleteClickPost() {
+    let id = this.props.details.id;
+    this.props.deletePost(id);
   }
   render() {
     var details = this.props.details;
@@ -104,7 +92,7 @@ class NewPost extends React.Component{
         <p>{details.desc}</p>
         <div className="callout callout-post">
           <ul className="menu simple">
-            <li><a href="#" onClick={this.deleteClickPost}>del</a></li>
+            <li><a href="#" onClick={this.deleteClickPost.bind(this)}>Delete</a></li>
             <li><a href="#">Author: {details.name}</a></li>
             <li><a href="#">Comments: 0</a></li>
             <li><a href="#">Tags: {h.getTaggedName()}</a></li>
@@ -162,11 +150,6 @@ class Post extends React.Component{
   tryClick () {
     alert('just trying out click events lalala');
   }
-
-//   deleteClickPost () {
-//     console.log(this.state.posts);
-
-//   },
   render () {
     var com = "Comments";
     return (
@@ -176,7 +159,7 @@ class Post extends React.Component{
         <p>{this.props.postbody}</p>
         <div className="callout callout-post">
           <ul className="menu simple">
-            <li><a href="#" onClick={this.deleteClickPost}>delete</a></li>
+            {/*<li><a href="#" onClick={this.deleteClickPost}>delete</a></li>*/}
             <li><a href="#" onClick={this.tryClick}>Author: {this.props.author}</a></li>
             <li><a href="#">{com}: {this.props.comments}</a></li>
             <li><a href="#">Tags: {h.getTaggedName()}</a></li>
