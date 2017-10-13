@@ -3,7 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 import AddPostForm from './form';
+import AppBar from 'material-ui/AppBar';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import Paper from 'material-ui/Paper';
 
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui-icons/Delete';
+import Grid from 'material-ui/Grid';
 
 //helper functions
 var h =  {
@@ -61,12 +68,30 @@ class App extends React.Component{
     var dummyPost = "Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.";
     return (
       <div>
-        <div className="row medium-8 large-7 columns">
-          <div className="list-of-posts">
-            {Object.keys(this.state.posts).map(this.renderPost.bind(this))}
-          </div>
-          <AddPostForm addPost={this.addPost.bind(this)}/>
-        </div>
+        <AppBar position="static" color="primary">
+          <Toolbar>
+            <Typography type="title" color="inherit">
+              My fucking posts
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+        <Grid container justify="center" spacing={24}>
+          <Grid item xs={6}>
+            <Typography type="title" color="inherit" style={{marginBottom:'20px'}}>
+              Blog
+            </Typography>
+            <Grid container justify="center" spacing={24}>
+              {Object.keys(this.state.posts).map(this.renderPost.bind(this))}
+            </Grid>
+            <Grid container justify="center" spacing={24}>
+              <Grid item xs={12}>
+                <AddPostForm addPost={this.addPost.bind(this)}/>
+              </Grid>
+            </Grid>
+
+          </Grid>
+        </Grid>
       </div>
     )
   }
@@ -86,19 +111,25 @@ class NewPost extends React.Component{
   render() {
     var details = this.props.details;
     return (
-      <div className="blog-post">
-        <h3 className="ptitle">{details.title}<small>{h.getTime()}</small></h3>
-        <img className="thumbnail" src={details.image} alt={details.name}/>
-        <p>{details.desc}</p>
-        <div className="callout callout-post">
-          <ul className="menu simple">
-            <li><a href="#" onClick={this.deleteClickPost.bind(this)}>Delete</a></li>
-            <li><a href="#">Author: {details.name}</a></li>
-            <li><a href="#">Comments: 0</a></li>
-            <li><a href="#">Tags: {h.getTaggedName()}</a></li>
-          </ul>
-        </div>
-      </div>
+      <Grid item xs={6}>
+        <Paper  elevation={4}>
+          <h3 className="ptitle">{details.title}<small>{h.getTime()}</small></h3>
+          <img className="thumbnail" src={details.image} alt={details.name}/>
+          <p>{details.desc}</p>
+          <div className="callout callout-post">
+            <ul className="menu simple">
+              <IconButton
+                aria-label="Delete"
+                onClick={this.deleteClickPost.bind(this)}>
+                <DeleteIcon />
+              </IconButton>
+              <li><a href="#">Author: {details.name}</a></li>
+              <li><a href="#">Comments: 0</a></li>
+              <li><a href="#">Tags: {h.getTaggedName()}</a></li>
+            </ul>
+          </div>
+        </Paper>
+      </Grid>
     )
   }
 }

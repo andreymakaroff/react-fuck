@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
 
 
+import Typography from 'material-ui/Typography';
+import Input, { InputLabel } from 'material-ui/Input';
+import { FormControl, FormHelperText } from 'material-ui/Form';
+import Button from 'material-ui/Button';
+import AddIcon from 'material-ui-icons/Add';
+import Paper from 'material-ui/Paper';
+
+let paperStyle = {
+  padding: '20px',
+};
+
 class AddPostForm extends React.Component{
   constructor(props){
     super(props);
@@ -23,20 +34,26 @@ class AddPostForm extends React.Component{
     this.refs.postForm.reset();
   }
   render() {
+    const { classes } = this.props;
     return (
-      <div className="callout secondary form-area">
-        <h5>Add a Post to the React Blog</h5>
+      <Paper style={paperStyle} elevation={4}>
+        <Typography type="headline" component="h3">
+          Add a Post to the React Blog
+        </Typography>
         <form className="post-edit" ref="postForm" onSubmit={this.createPost.bind(this)}>
-          <label>Post Title
-            <input type="text" ref={(ref) => this.title = ref} placeholder="Post Title" required/>
-          </label>
-          <button type="submit" className="button">Add Post</button>
+          <hr/>
+          <FormControl>
+            <InputLabel htmlFor="name-simple">Post Title</InputLabel>
+            <Input inputRef={(ref) => this.title = ref} placeholder="Type title"/>
+          </FormControl>
+          <Button fab color="primary" aria-label="add"  onClick={this.createPost.bind(this)}>
+            <AddIcon />
+          </Button>
         </form>
-      </div>
+      </Paper>
     )
   }
 }
-
 
 
 export default AddPostForm;
