@@ -2,14 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import AddPostForm from './form';
+import AddPostForm from './AddPostForm';
+import EditTestPostForm from './EditTestPostForm';
+// import editPostForm from './editPostForm';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
-
 import IconButton from 'material-ui/IconButton';
 import DeleteIcon from 'material-ui-icons/Delete';
+import ModeEditIcon from 'material-ui-icons/ModeEdit';
 import Grid from 'material-ui/Grid';
 
 //helper functions
@@ -40,7 +42,6 @@ var h =  {
 let posts = {};
 // App
 class App extends React.Component{
-
   constructor (props) {
    super(props);
    this.state = {
@@ -48,7 +49,7 @@ class App extends React.Component{
    }
   }
   addPost(post) {
-    var postId = post.id;
+    let postId = post.id;
     this.state.posts['post-' + postId] = post;
     this.setState({ posts : this.state.posts });
   }
@@ -56,16 +57,23 @@ class App extends React.Component{
     delete this.state.posts['post-' + id];
     this.setState({ posts : this.state.posts });
   }
+  editPost(id) {
+    console.log(id);
+
+    // delete this.state.posts['post-' + id];
+    // this.setState({ posts : this.state.posts });
+  }
 
   renderPost(key){
-    return <NewPost key={key} index={key} details={this.state.posts[key]}  deletePost={this.deletePost.bind(this)} />
+    return <NewPost
+      key={key}
+      index={key}
+      details={this.state.posts[key]}
+      deletePost={this.deletePost.bind(this)}
+      editPost={this.editPost.bind(this)}/>
   }
+
   render() {
-    var imgOne = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Balaton_Hungary_Landscape.jpg/1024px-Balaton_Hungary_Landscape.jpg";
-    var imgTwo ="https://c2.staticflickr.com/8/7432/9087815445_1a14743549_b.jpg";
-    var imgThree ="https://c2.staticflickr.com/6/5738/23929500196_b6a1ce1dfb_b.jpg";
-    var imgFour ="https://pixabay.com/static/uploads/photo/2015/09/14/19/15/aerial-landscape-939963_960_720.jpg";
-    var dummyPost = "Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus.";
     return (
       <div>
         <AppBar position="static" color="primary">
@@ -75,10 +83,9 @@ class App extends React.Component{
             </Typography>
           </Toolbar>
         </AppBar>
-
         <Grid container justify="center" spacing={24}>
           <Grid item xs={6}>
-            <Typography type="title" color="inherit" style={{marginBottom:'20px'}}>
+            <Typography type="title"  component="h1" color="inherit" style={{marginBottom:'20px'}}>
               Blog
             </Typography>
             <Grid container justify="center" spacing={24}>
@@ -86,10 +93,10 @@ class App extends React.Component{
             </Grid>
             <Grid container justify="center" spacing={24}>
               <Grid item xs={12}>
+                <EditTestPostForm />
                 <AddPostForm addPost={this.addPost.bind(this)}/>
               </Grid>
             </Grid>
-
           </Grid>
         </Grid>
       </div>
@@ -98,36 +105,41 @@ class App extends React.Component{
 }
 
 
-
-/*
-  NewPost
-  <NewPost />
-*/
 class NewPost extends React.Component{
   deleteClickPost() {
     let id = this.props.details.id;
     this.props.deletePost(id);
   }
+  editClickPost() {
+    let id = this.props.details.id;
+    this.props.editPost(id);
+  }
   render() {
     var details = this.props.details;
     return (
       <Grid item xs={6}>
-        <Paper  elevation={4}>
-          <h3 className="ptitle">{details.title}<small>{h.getTime()}</small></h3>
-          <img className="thumbnail" src={details.image} alt={details.name}/>
-          <p>{details.desc}</p>
-          <div className="callout callout-post">
-            <ul className="menu simple">
+        <Paper style={{padding:'20px'}} elevation={4}>
+          <Typography type="title" component="h4">
+            {details.title}
+          </Typography>
+          <Grid container spacing={24}>
+            <Grid item xs={6}>
               <IconButton
                 aria-label="Delete"
                 onClick={this.deleteClickPost.bind(this)}>
                 <DeleteIcon />
               </IconButton>
-              <li><a href="#">Author: {details.name}</a></li>
-              <li><a href="#">Comments: 0</a></li>
-              <li><a href="#">Tags: {h.getTaggedName()}</a></li>
-            </ul>
-          </div>
+              <IconButton
+                color="accent"
+                onClick={this.editClickPost.bind(this)}
+                aria-label="edit">
+                <ModeEditIcon />
+              </IconButton>
+            </Grid>
+            <Grid item xs={6}  style={{textAlign:'right'}}>
+              <small>{h.getTime()}</small>
+            </Grid>
+          </Grid>
         </Paper>
       </Grid>
     )
@@ -135,135 +147,6 @@ class NewPost extends React.Component{
 }
 
 
-// Nav component
-class Nav extends React.Component{
-  render() {
-    return (
-      <div className="top-bar">
-        <div className="top-bar-left">
-          <ul className="menu">
-            <li className="menu-text">React Blog</li>
-            <li><a href="#">One</a></li>
-            <li><a href="#">Two</a></li>
-            <li><a href="#">Three</a></li>
-          </ul>
-        </div>
-      </div>
-    )
-  }
-}
-
-
-// Banner component
-class Banner extends React.Component{
-
-  render () {
-    return (
-      <div>
-        <Nav />
-        <div className="big-banner">
-          <div className="callout large primary">
-            <div className="row column text-center">
-              <h1>React Blog</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-}
-
-
-// Blog Post
-
-class Post extends React.Component{
-  tryClick () {
-    alert('just trying out click events lalala');
-  }
-  render () {
-    var com = "Comments";
-    return (
-      <div className="blog-post">
-        <h3 className="ptitle">{this.props.ptitle}<small>{this.props.date}</small></h3>
-        <img className="thumbnail" src={this.props.pimg} />
-        <p>{this.props.postbody}</p>
-        <div className="callout callout-post">
-          <ul className="menu simple">
-            {/*<li><a href="#" onClick={this.deleteClickPost}>delete</a></li>*/}
-            <li><a href="#" onClick={this.tryClick}>Author: {this.props.author}</a></li>
-            <li><a href="#">{com}: {this.props.comments}</a></li>
-            <li><a href="#">Tags: {h.getTaggedName()}</a></li>
-          </ul>
-        </div>
-      </div>
-    )
-  }
-}
-
-//instead of ReactDOM like in the video:
-
-
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();
-
-//polyfill for key
-// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
-if (!Object.keys) {
-  Object.keys = (function() {
-    'use strict';
-    var hasOwnProperty = Object.prototype.hasOwnProperty,
-      hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
-      dontEnums = [
-        'toString',
-        'toLocaleString',
-        'valueOf',
-        'hasOwnProperty',
-        'isPrototypeOf',
-        'propertyIsEnumerable',
-        'constructor'
-      ],
-      dontEnumsLength = dontEnums.length;
-
-    return function(obj) {
-      if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
-        throw new TypeError('Object.keys called on non-object');
-      }
-
-      var result = [], prop, i;
-
-      for (prop in obj) {
-        if (hasOwnProperty.call(obj, prop)) {
-          result.push(prop);
-        }
-      }
-
-      if (hasDontEnumBug) {
-        for (i = 0; i < dontEnumsLength; i++) {
-          if (hasOwnProperty.call(obj, dontEnums[i])) {
-            result.push(dontEnums[i]);
-          }
-        }
-      }
-      return result;
-    };
-  }());
-}
-
-//header scroll stuff
-window.onscroll = function(e) {
-  var nav = document.getElementsByClassName("top-bar")[0],
-    banner = document.getElementsByClassName("big-banner")[0],
-    range = 70,
-    scrollTop = document.body.scrollTop;
-
-  if (scrollTop > range) {
-    nav.classList.add("scrollNav");
-    banner.classList.add("blurred");
-  }
-  else {
-    nav.classList.remove("scrollNav");
-    banner.classList.remove("blurred");
-  }
-};
 

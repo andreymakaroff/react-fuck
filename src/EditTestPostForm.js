@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 import Typography from 'material-ui/Typography';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
@@ -8,11 +7,12 @@ import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import Paper from 'material-ui/Paper';
 
+
 let paperStyle = {
   padding: '20px',
 };
 
-class AddPostForm extends React.Component{
+class EditTestPostForm extends React.Component{
   constructor(props){
     super(props);
   }
@@ -37,14 +37,14 @@ class AddPostForm extends React.Component{
     const { classes } = this.props;
     return (
       <Paper style={paperStyle} elevation={4}>
-        <Typography type="headline" component="h3">
-          Add a Post to the React Blog
+        <Typography type="title" component="h3">
+          EDIT TEST
         </Typography>
         <form className="post-edit" ref="postForm" onSubmit={this.createPost.bind(this)}>
           <hr/>
           <FormControl>
             <InputLabel htmlFor="name-simple">Post Title</InputLabel>
-            <Input inputRef={(ref) => this.title = ref} placeholder="Type title"/>
+            <Input required inputRef={(ref) => this.title = ref} placeholder="Type title"/>
           </FormControl>
           <Button fab color="primary" aria-label="add"  onClick={this.createPost.bind(this)}>
             <AddIcon />
@@ -56,4 +56,4 @@ class AddPostForm extends React.Component{
 }
 
 
-export default AddPostForm;
+export default EditTestPostForm;
