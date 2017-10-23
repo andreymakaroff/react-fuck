@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Typography from 'material-ui/Typography';
 import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import { FormControl } from 'material-ui/Form';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import Paper from 'material-ui/Paper';
@@ -28,13 +28,12 @@ class EditTestPostForm extends React.Component{
       // name : this.refs.name.value,
       // desc : this.refs.desc.value,
       // image : this.refs.image.value
-    }
+    };
     // add the post to the App State
     this.props.addPost(post);
     this.refs.postForm.reset();
   }
   render() {
-    const { classes } = this.props;
     return (
       <Paper style={paperStyle} elevation={4}>
         <Typography type="title" component="h3">
