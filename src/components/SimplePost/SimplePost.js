@@ -36,7 +36,7 @@ class SimplePost extends React.Component{
 
   render() {
 
-    const {title, enableDelete, enableEdit, date} = this.props;
+    const {title, enableDelete, enableEdit} = this.props;
 
     return (
       <Grid item xs={6}>

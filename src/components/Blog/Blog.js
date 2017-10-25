@@ -31,6 +31,20 @@ class Blog extends React.Component{
     })
   };
 
+  updatePost = (updatedPost) => {
+    let {posts, activePostKey} = this.state;
+
+    if(activePostKey) {  // проверка чтоб не добавлялся с key = null
+      posts[activePostKey] = updatedPost;
+    }
+
+    this.setState({
+      activePost: null,
+      activePostKey: null,
+      posts // posts:posts
+    })
+  };
+
   handleDeletePost = (key) => {
     const {posts} = this.state;
     delete posts[key];
@@ -40,22 +54,15 @@ class Blog extends React.Component{
     });
   };
 
-  handleDeletePost = (key) => {
+  handleEditPost = (key) => {
     const {posts} = this.state;
-    delete posts[key];
+    const activePost = posts[key];
 
     this.setState({
-      posts  //posts:posts
+      activePostKey: key,
+      activePost
     });
   };
-
-  deletePost(id) {
-    delete this.state.posts['post-' + id];
-    this.setState({ posts : this.state.posts });
-  }
-  editPost(id) {
-    console.log(id);
-  }
 
   renderPost = (key) => {
     const postData = this.state.posts[key];
@@ -87,7 +94,9 @@ class Blog extends React.Component{
           </Grid>
           <Grid container justify="center" spacing={24}>
             <Grid item xs={12}>
-              <EditTestPostForm editPost={this.editPost.bind(this)}/>
+              <EditTestPostForm
+                activePost={activePost}
+                onUpdatePost={this.updatePost}/>
               <AddPostForm addPost={this.addPost}/>
             </Grid>
           </Grid>

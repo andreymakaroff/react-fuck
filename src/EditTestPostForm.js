@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 import Typography from 'material-ui/Typography';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -12,40 +13,71 @@ let paperStyle = {
   padding: '20px',
 };
 
+const initialState = {
+  title: ''
+};
+
 class EditTestPostForm extends React.Component{
+  state = initialState;
+
+  static propTypes = {
+    activePost: PropTypes.object,
+    onUpdatePost: PropTypes.func
+  };
+
+  static defaultProps = {
+    activePost: null
+  };
+
   constructor(props){
     super(props);
   }
 
-  createPost(event) {
+  componentWillReceiveProps = (nextProps) => {
+    // компонент получает новые props. Этод метод не вызывается в момент первого render'a
+    if(nextProps.activePost) {
+      this.setState(nextProps.activePost);
+    }
+  };
+
+  handlePost = (event) => {
     event.preventDefault();
-    // take the data from the form and create an object
-    let timestamp = (new Date()).getTime();
-    console.log(this);
-    let post = {
-      id : timestamp,
-      title : this.title.value,
-      // name : this.refs.name.value,
-      // desc : this.refs.desc.value,
-      // image : this.refs.image.value
+
+    const {activePost, addPost, onUpdatePost} = this.props;
+    const post = {
+      title : this.state.title
     };
-    // add the post to the App State
-    this.props.addPost(post);
-    this.refs.postForm.reset();
-  }
+    onUpdatePost(post);
+    this.setState(initialState);
+  };
+
+
+  handleChangeInput = (field) => (event) => {
+    const value = event.target.value;
+    this.setState({
+      [field]: value
+    });
+  };
+
   render() {
+    let {title} = this.state;
+
     return (
       <Paper style={paperStyle} elevation={4}>
         <Typography type="title" component="h3">
-          EDIT TEST
+          edit
         </Typography>
-        <form className="post-edit" ref="postForm" onSubmit={this.createPost.bind(this)}>
+        <form className="post-edit" ref="postForm" onSubmit={this.handlePost}>
           <hr/>
           <FormControl>
             <InputLabel htmlFor="name-simple">Post Title</InputLabel>
-            <Input required inputRef={(ref) => this.title = ref} placeholder="Type title"/>
+            <Input
+              required
+              value={title}
+              onChange={this.handleChangeInput('title')}
+              placeholder="Type title"/>
           </FormControl>
-          <Button fab color="primary" aria-label="add"  onClick={this.createPost.bind(this)}>
+          <Button fab color="primary" aria-label="add"  onClick={this.handlePost}>
             <AddIcon />
           </Button>
         </form>
