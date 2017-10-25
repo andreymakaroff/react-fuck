@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-import { ValidatorForm } from 'react-form-validator-core';
-import { TextValidator} from 'react-material-ui-form-validator';
+// import { ValidatorForm } from 'react-form-validator-core';
+// import { TextValidator} from 'react-material-ui-form-validator';
 
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
@@ -33,14 +33,10 @@ class PostForm extends React.Component{
     activePost: null
   };
 
-  constructor(props){
-    super(props);
-  }
-
   handlePost = (event) => {
     event.preventDefault();
 
-    const {activePost, addPost, onUpdatePost} = this.props;
+    const {addPost} = this.props;
 
     if(this.state.title){
       const post = {

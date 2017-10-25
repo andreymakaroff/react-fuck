@@ -24,22 +24,12 @@ class PopupEditPostForm extends React.Component{
     onUpdatePost: PropTypes.func
   };
 
-  constructor(props){
-    super(props);
-  }
-
   componentWillReceiveProps = (nextProps) => {
     // компонент получает новые props. Этод метод не вызывается в момент первого render'a
     if(nextProps.activePost) {
       this.setState(nextProps.activePost);
       this.setState({isOpenedModal:nextProps.isOpenedModal});
     }
-  };
-
-  handleClickOpen = () => {
-    this.setState({
-      isOpenedModal: true
-    });
   };
 
   handleRequestClose = () => {
@@ -71,7 +61,6 @@ class PopupEditPostForm extends React.Component{
 
     return (
       <div>
-        <Button onClick={this.handleClickOpen}>Open form dialog</Button>
         <Dialog open={isOpenedModal} onRequestClose={this.handleRequestClose}>
           <DialogTitle> Edit Post</DialogTitle>
           <DialogContent>

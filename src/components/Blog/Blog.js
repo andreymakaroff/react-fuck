@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import AddPostForm from '../../components/PostForm/PostForm';
 import SimplePost from '../../components/SimplePost/SimplePost';
