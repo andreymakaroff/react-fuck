@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import AddPostForm from '../../components/PostForm/PostForm';
 import SimplePost from '../../components/SimplePost/SimplePost';
 
-import EditTestPostForm from '../../EditTestPostForm';
+import PopupEditPostForm from '../../EditTestPostForm';
 
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
@@ -16,10 +16,6 @@ class Blog extends React.Component{
     activePost: null,
     activePostKey: null
   };
-
-  constructor(props){
-    super(props);
-  }
 
   addPost = (post) => {
     const {posts} = this.state;
@@ -59,6 +55,7 @@ class Blog extends React.Component{
     const activePost = posts[key];
 
     this.setState({
+      isOpenedModal: true,
       activePostKey: key,
       activePost
     });
@@ -81,7 +78,7 @@ class Blog extends React.Component{
 
   render() {
 
-    const {posts, activePost} = this.state;
+    const {posts, activePost, isOpenedModal} = this.state;
 
     return (
       <Grid container justify="center" spacing={0}>
@@ -94,7 +91,8 @@ class Blog extends React.Component{
           </Grid>
           <Grid container justify="center" spacing={24}>
             <Grid item xs={12}>
-              <EditTestPostForm
+              <PopupEditPostForm
+                isOpenedModal={isOpenedModal}
                 activePost={activePost}
                 onUpdatePost={this.updatePost}/>
               <AddPostForm addPost={this.addPost}/>

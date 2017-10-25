@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
+import { ValidatorForm } from 'react-form-validator-core';
+import { TextValidator} from 'react-material-ui-form-validator';
+
 import Typography from 'material-ui/Typography';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl } from 'material-ui/Form';
+import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import AddIcon from 'material-ui-icons/Add';
 import Paper from 'material-ui/Paper';
@@ -38,13 +41,14 @@ class PostForm extends React.Component{
     event.preventDefault();
 
     const {activePost, addPost, onUpdatePost} = this.props;
-    const post = {
-      title : this.state.title
-    };
 
-    (activePost) ? onUpdatePost(post) : addPost(post);
-
-    this.setState(initialState);
+    if(this.state.title){
+      const post = {
+        title : this.state.title
+      };
+      addPost(post);
+      this.setState(initialState);
+    }
 
   };
 
@@ -65,14 +69,13 @@ class PostForm extends React.Component{
         </Typography>
         <form className="post-edit" ref="postForm" onSubmit={this.handlePost}>
           <hr/>
-          <FormControl>
-            <InputLabel htmlFor="name-simple">Post Title</InputLabel>
-            <Input
-              required
-              value={title}
-              onChange={this.handleChangeInput('title')}
-              placeholder="Type title"/>
-          </FormControl>
+          <TextField
+            required
+            value={title}
+            onChange={this.handleChangeInput('title')}
+            label="Type title"
+            margin="normal"
+          />
           <Button fab color="primary" aria-label="add"  onClick={this.handlePost}>
             <AddIcon />
           </Button>

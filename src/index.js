@@ -8,9 +8,9 @@ import Blog from "./components/Blog/Blog";
 
 // App
 class App extends React.Component{
-  constructor (props) {
-   super(props);
-  }
+  // constructor (props) {
+  //  super(props);
+  // }
   render() {
     return (
       <div>
